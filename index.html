@@ -9,45 +9,317 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="text-center"> BLB TITLES AND CITIZENSHIP MGT SYSTEM</h1>
-
+    <h1 class="text-center">BLB TITLES AND CITIZENSHIP MGT SYSTEM</h1>
     <div class="container">
         <div class="jumbotron">
             <div class="row">
                 <div class="col-md-4">
                     <h3>REGISTRATION FORMS</h3>
-                    <p>citizen and title registration forms</p>
-                </div>
-                <div class="col-md-4">
-                    <h3>REGISTERD CITIZENS</h3>
-                    <P>List of registered citizens go here</P>
-                </div>
-                <div class="col-md-4">
-                    <h3>REGISTERED TITLES</h3>
-                    <P>List of registered titles go here.</P>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <p>Citizen Registration Form</p>
 
-    <div class="container">
-        <div class="jumbotron">
-            <div class="row">
-                <div class="col-md-8">
-                    <h3 class="text-center">TITLE TRANSFER</h3>
-                    <p>create the title tranfer form under this section</p>
-                </div>
-                <div class="col-md-4">
-                    <h4>TITLE SEARCH</h4>
-                    <form action="" method="get">
-                        <label for="search">TITLE NUMBER:</label>
-                        <input type="text" name="" id="" placeholder="TITLE NUMBER"> <br>
-                        <input type="button" value="SEARCH" class="btn btn-success">
+                    <form action="" method="post" action="/register-citizen" >
+                      <div class="form-group">
+                        <label for="citizenName">Full Name:</label>
+                        <input type="text" class="form-control" id="citizenName" placeholder="Enter Full Name" required>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth:</label>
+                        <input type="date" class="form-control" id="dateOfBirth" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="fatherName">Father's Name:</label>
+                        <input type="text" class="form-control" id="fatherName" placeholder="Enter Father's Name">
+                      </div>
+                  
+                      <div class="form-group">
+                        <label for="motherName">Mother's Name:</label>
+                        <input type="text" class="form-control" id="motherName" placeholder="Enter Mother's Name">
+                      </div>
+
+                      <div class="form-group">
+                        <label>Gender:</label>
+                        <label class="radio-inline">
+                          <input type="radio" name="gender" value="male" required> Male
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="gender" value="female" required> Female
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="gender" value="other" required> Other
+                        </label>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="bloodGroup">Blood Group:</label>
+                        <select class="form-control" id="bloodGroup" required>
+                            <option value="aPositive">Select a BG</option>
+                          <option value="aPositive">A+</option>
+                          <option value="aNegative">A-</option>
+                          <option value="bPositive">B+</option>
+                          <option value="bNegative">B-</option>
+                          <option value="oPositive">O+</option>
+                          <option value="oNegative">O-</option>
+                        </select>
+                      </div>
+
+                      <!-- <button type="submit" class="btn btn-primary">Registrater Citizen</button> -->
+                    </form>
+                    <p>Land Title Registration Form</p>
+
+                    <form  action="/perform-title-transfer" method="post" id="landTitleRegistrationForm">
+                      <div class="form-group">
+                        <label for="ownerName">Name of the Owner:</label>
+                        <input type="text" class="form-control" id="ownerName" placeholder="Enter Owner Name" required>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="landLocation">Location:</label>
+                        <input type="text" class="form-control" id="landLocation" placeholder="Enter Land Location" required>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="coordinatesX">X Coordinates:</label>
+                        <input type="text" class="form-control" id="coordinatesX" placeholder="Enter X Coordinates" required>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="coordinatesY">Y Coordinates:</label>
+                        <input type="text" class="form-control" id="coordinatesY" placeholder="Enter Y Coordinates" required>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="titleNumber">Title Number:</label>
+                        <input type="text" class="form-control" id="titleNumber" placeholder="Enter Title Number" required>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary"> Registrater</button>
                     </form>
                 </div>
+
+                <div class="col-md-4">
+                    <!-- Registered Citizens will be displayed here -->
+                    <div id="registeredCitizens"></div>
+                </div>
+
+                <div class="col-md-4">
+                    <!-- Registered Titles will be displayed here -->
+                    <div id="registeredTitles"></div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="jumbotron">
+          <div class="row">
+            <div class="col-md-8">
+              <h3 class="text-center">TITLE TRANSFER</h3>
+              <p>Please fill out the following form to initiate a title transfer:</p>
+                 <!-- Add this section to your existing HTML code -->
+                         <div class="col-md-8">
+                        <h3 class="text-center">TITLE TRANSFER</h3>
+                        <p>Please fill out the following form to initiate a title transfer:</p>
+                        
+                        <form id="titleTransferForm">
+                            <div class="form-group">
+                                <label for="titleNumberTransfer">Title Number:</label>
+                                <input type="text" class="form-control" id="titleNumberTransfer" placeholder="Enter Title Number" required>
+                                <button type="button" class="btn btn-success" onclick="searchTitle()">SEARCH</button>
+                            </div>
+                            
+                            <!-- Display details of the registered citizen -->
+                            <div id="registeredCitizenDetails"></div>
+                            
+                            <div class="form-group">
+                                <label for="newOwnerName">New Owner's Name:</label>
+                                <input type="text" class="form-control" id="newOwnerName" placeholder="Enter New Owner's Name" required>
+                            </div>
+                            
+                            <button type="button" class="btn btn-primary" onclick="submitTitleTransfer()">Initiate Title Transfer</button>
+                        </form>
+</div>
 
+
+                        <script>
+                            
+                    // ... (Your existing code)
+
+                    // Function to handle title transfer form submission
+                    function submitTitleTransfer() {
+                        var titleNumberTransfer = document.getElementById('titleNumberTransfer').value;
+                        var newOwnerName = document.getElementById('newOwnerName').value;
+
+                        // Here, you can send the data to your BLB database using an AJAX request
+                        fetch("/initiate-title-transfer", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                titleNumberTransfer: titleNumberTransfer,
+                                newOwnerName: newOwnerName,
+                                // Add other form field data here
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Display a success message
+                                alert(data.message);
+
+                                // Assuming the server responds with the updated data, update the displayed titles
+                                registeredTitles.push(/* Add the new title data here */);
+                                displayRegisteredTitles();
+
+                                // Clear the title transfer form fields after successful submission
+                                document.getElementById('titleNumberTransfer').value = '';
+                                document.getElementById('newOwnerName').value = '';
+                            } else {
+                                // Display an error message if title transfer is not successful
+                                alert("Title transfer initiation failed: " + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            // Handle error, display an alert, etc.
+                        });
+                    }
+                    </script>
+            </div>
+    
+            <div class="col-md-4">
+              <h4>TITLE SEARCH</h4>
+    
+              
+                <button type="submit" class="btn btn-success">SEARCH</button>
+             
+            </div>
+            <script>
+                // Sample data for registered citizens and titles
+                var registeredCitizens = ["John Doe", "Jane Doe", "Alice Smith"];
+                var registeredTitles = []; // Initialize an empty array for titles
+        
+                // Function to display registered citizens
+                function displayRegisteredCitizens() {
+                    var citizensContainer = document.querySelector('#registeredCitizens');
+                    citizensContainer.innerHTML = '<h3>REGISTERED CITIZENS</h3>';
+                    
+                    for (var i = 0; i < registeredCitizens.length; i++) {
+                        citizensContainer.innerHTML += '<p>' + registeredCitizens[i] + '</p>';
+                    }
+                }
+        
+                // Function to handle citizen registration form submission
+                function submitCitizenRegistration() {
+                    var citizenName = document.getElementById('citizenName').value;
+        
+                    // Here, you can send the data to your BLB database using an AJAX request
+                    fetch("/register-citizen", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            citizenName: citizenName,
+                            // Add other form field data here
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        registeredCitizens.push(data.citizenName);
+                        displayRegisteredCitizens();
+                        document.getElementById('citizenName').value = '';
+                        // Clear other form fields as needed
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Handle error, display an alert, etc.
+                    });
+                }
+        
+                // Function to display registered titles
+                function displayRegisteredTitles() {
+                    var titlesContainer = document.querySelector('#registeredTitles');
+                    titlesContainer.innerHTML = '<h3>REGISTERED TITLES</h3>';
+                    
+                    for (var i = 0; i < registeredTitles.length; i++) {
+                        titlesContainer.innerHTML += '<p>' + registeredTitles[i] + '</p>';
+                    }
+                }
+        
+                // Call the functions to display the initial data
+                displayRegisteredCitizens();
+                displayRegisteredTitles();
+            </script>
+
+<script>
+    // Sample data for registered citizens and titles
+    var registeredCitizens = [];
+    var registeredTitles = []; // Initialize an empty array for titles
+
+    // Function to display registered citizens
+    function displayRegisteredCitizens() {
+        var citizensContainer = document.querySelector('#registeredCitizens');
+        citizensContainer.innerHTML = '<h3>REGISTERED CITIZENS</h3>';
+        
+        for (var i = 0; i < registeredCitizens.length; i++) {
+            citizensContainer.innerHTML += '<p>' + registeredCitizens[i] + '</p>';
+        }
+    }
+
+    // Function to display registered titles
+    function displayRegisteredTitles() {
+        var titlesContainer = document.querySelector('#registeredTitles');
+        titlesContainer.innerHTML = '<h3>REGISTERED TITLES</h3>';
+        
+        for (var i = 0; i < registeredTitles.length; i++) {
+            titlesContainer.innerHTML += '<p>' + registeredTitles[i] + '</p>';
+        }
+    }
+
+    // Function to handle title transfer form submission
+    function submitTitleTransfer() {
+        // Assuming the title transfer form fields are validated and submitted successfully
+        // Here, you can send the data to your BLB database using an AJAX request
+        fetch("/perform-title-transfer", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                // Add title transfer form field data here
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Display a success message
+                alert(data.message);
+
+                // Assuming the server responds with the updated data, update the displayed titles
+                registeredTitles.push(/* Add the new title data here */);
+                displayRegisteredTitles();
+
+                // Clear the title transfer form fields after successful submission
+                document.getElementById('ownerName').value = '';
+                document.getElementById('landLocation').value = '';
+                document.getElementById('coordinatesX').value = '';
+                document.getElementById('coordinatesY').value = '';
+                document.getElementById('titleNumber').value = '';
+            } else {
+                // Display an error message if title transfer is not successful
+                alert("Title transfer failed: " + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error, display an alert, etc.
+        });
+    }
+
+    // Call the functions to display the initial data
+    displayRegisteredCitizens();
+    displayRegisteredTitles();
+</script>
 </body>
 </html>
