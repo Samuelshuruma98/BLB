@@ -1,5 +1,5 @@
 .col-md-4 {
-    border: 3px solid black;
+    border: 3px solid rgb(5, 5, 5);
     margin-top: 30px !important;
     padding: 10px;
 }
@@ -8,3 +8,101 @@
     margin-top: 30px !important;
     padding: 10px;
 }
+body {
+    background-color: #2f3f50;
+}
+
+h1 {
+    color: #007bff;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: normal;
+}
+
+.jumbotron {
+    background-color: #ffffff;
+    margin-top: 20px;
+}
+
+.form-container {
+    margin-top: 20px;
+}
+
+form {
+    background-color: #dacdcd;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px 0px #aaaaaa;
+}
+h3{
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+label {
+    font-weight: bold;
+}
+
+.btn-primary {
+    padding-bottom: 3px;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    padding-bottom: 3px;
+    background-color: #0056b3;
+    border-color: #0056b3;
+
+}
+/* Add this in your style.css file or in a style block within the head of your HTML document
+
+.container {
+    margin-top: 20px;
+}
+
+.jumbotron {
+    background-color: #f8f8f8;
+}
+
+.container h3 {
+    margin-top: 20px;
+}
+
+.container form {
+    margin-bottom: 20px;
+}
+
+.container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.container input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+.container button {
+    padding: 10px;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+/* Add more styles as needed */
+
+/* Adjust styles for smaller screens */
+/* @media (max-width: 767px) {
+    .container form {
+        margin-bottom: 15px;
+    }
+} */ 
