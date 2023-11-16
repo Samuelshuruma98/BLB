@@ -1,14 +1,33 @@
-//Remember to import in mongoose
+const mongoose = require('mongoose');
 
+// MongoDB schema setup for Citizen
+const citizenSchema = new mongoose.Schema({
+  fullName: String,
+  dateOfBirth: Date,
+  fatherName: String,
+  motherName: String,
+  gender: String,
+  bloodGroup: String,
+});
 
-//create the citizen schema here with the appropriate data types
+const Citizen = mongoose.model('Citizen', citizenSchema);
 
+// MongoDB schema setup for TitleTransfer
+const titleTransferSchema = new mongoose.Schema({
+  Name: String,
+  Location: String,
+  Size: Number,
+  titleNumber: String,
+  transferAgreement: {
+    type: Boolean,
+    default: false,
+  },
+  newOwnerName: String,
+});
 
-//create the title schema here wit the right fields
+const TitleTransfer = mongoose.model('TitleTransfer', titleTransferSchema);
 
-
-//convert the schemas into models from here
-
-
-//export the models as modules from here.
-
+module.exports = {
+  Citizen: Citizen,
+  TitleTransfer: TitleTransfer,
+};
